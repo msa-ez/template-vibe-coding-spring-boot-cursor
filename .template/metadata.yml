@@ -1,0 +1,8 @@
+name: Vibe Coding for Spring Boot
+rating: 5
+imageUrl: https://avatars.githubusercontent.com/u/153750385?s=200&v=4
+description: Implement Spring Boot 3 based on clean code through Vibe Coding
+testModel: testmodel
+tags:
+  - Java
+  - Spring boot
