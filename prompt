@@ -13,7 +13,7 @@ I want to utilize following techniques:
 - H2 DB
 - Lombok
 - Kafka with spring-cloud-streams library 
-- JUnit Test
+- JUnit Test(Given-When-Then)
 
 
 SELF-CRITICISM: 
