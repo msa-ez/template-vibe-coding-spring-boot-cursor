@@ -3,7 +3,7 @@ Firstly, set OPENAI_API_KEY:
 export OPENAI_API_KEY=sk-...
 ```
 
-Let the Vibe Coding generates code:
+Let the Vibe Coding generates code:
 ```
 cd vibe-coding
 docker-compose up
