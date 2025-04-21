@@ -5,7 +5,7 @@ export OPENAI_API_KEY=sk-...
 
 Let the GPT Engineer generates code:
 ```
-cd gpt-engineer
+cd vibe-coding
 docker-compose up
 ```
 
