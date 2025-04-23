@@ -24,7 +24,7 @@ SELF-CRITICISM:
 <function>
 
 var cache = []
-const includingKeys = ["", "boundedContext", "options", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "entities", "relations", "targetElement", "items"]
+const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "entities", "relations", "targetElement", "items", "boundedContext", "options"]
 
 function customStringify(obj, cache = new Set()) {
     if (obj === null || typeof obj !== 'object') {
@@ -49,6 +49,9 @@ function customStringify(obj, cache = new Set()) {
             if (isNaN(key) && !includingKeys.includes(key)) continue;
 
             let value = obj[key];
+            // null 값은 건너뛰기
+            if (value === null) continue;
+
             if (key === "_type" && typeof value === 'string' && value.indexOf('.') > 1) {
                 value = value.split(".").pop();
             }
