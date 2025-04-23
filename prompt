@@ -24,7 +24,7 @@ SELF-CRITICISM:
 <function>
 
 var cache = []
-const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "apiPath", "method", "fullApiPath", "lifecycles", "options"]
+const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "apiPath", "method", "fullApiPath", "lifecycles", "options", "targetElement"]
 
 function customStringify(obj, cache = new Set()) {
     if (obj === null || typeof obj !== 'object') {
