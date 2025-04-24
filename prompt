@@ -26,12 +26,12 @@ SELF-CRITICISM:
 var cache = []
 const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "incomingRelations", "source", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "isRestRepository", "restRepositoryInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "entities", "relations", "targetElement", "items"]
 
-function customStringify(obj, cache = new Set(), parentType = null, parentKey = null) {
+function customStringify(obj, cache = new Set(), parentType = null, parentKey = null, path = []) {
     if (obj === null || typeof obj !== 'object') {
         return JSON.stringify(obj);
     }
 
-    // 1. 빈 배열이거나 null인 경우 처리
+    // 빈 배열이거나 null인 경우 처리
     if (Array.isArray(obj) && obj.length === 0) {
         return null; // 나중에 제거를 위해 null 반환
     }
@@ -41,9 +41,13 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
     }
 
     cache.add(obj);
+    
+    // 현재 경로 업데이트
+    const currentPath = [...path];
+    if (parentKey) currentPath.push(parentKey);
 
     if (Array.isArray(obj)) {
-        const items = obj.map(item => customStringify(item, cache, parentType, parentKey))
+        const items = obj.map(item => customStringify(item, cache, parentType, parentKey, currentPath))
                         .filter(item => item !== null); // null 항목 필터링
         cache.delete(obj);
         
@@ -64,8 +68,13 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             // null 값은 건너뛰기
             if (value === null) continue;
             
-            // 2. incomingRelations 처리 - policies 하위가 아닌 source 하위에는 생성 안 함
-            if (key === 'incomingRelations' && parentKey === 'source') {
+            // 1. incomingRelations는 policies 하위에만 생성
+            if (key === 'incomingRelations' && !currentPath.includes('policies')) {
+                continue;
+            }
+            
+            // 2. incomingRelations.value는 출력하지 않음
+            if (key === 'value' && currentPath.includes('incomingRelations')) {
                 continue;
             }
 
@@ -73,8 +82,8 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
                 value = value.split(".").pop();
             }
 
-            // 재귀 호출 시 현재 객체의 타입과 키 정보 전달
-            const stringifiedValue = customStringify(value, cache, obj.type || parentType, key);
+            // 재귀 호출 시 현재 객체의 타입과 키 정보, 경로 전달
+            const stringifiedValue = customStringify(value, cache, obj.type || parentType, key, currentPath);
             
             // null을 반환받은 경우(빈 배열/객체) 건너뛰기
             if (stringifiedValue === null) continue;
