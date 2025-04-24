@@ -77,6 +77,11 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             if (key === 'value' && currentPath.includes('incomingRelations')) {
                 continue;
             }
+            
+            // 3. entities.relations 하위의 relations 제거
+            if (key === 'relations' && currentPath.includes('entities') && currentPath.includes('relations')) {
+                continue;
+            }
 
             if (key === "_type" && typeof value === 'string' && value.indexOf('.') > 1) {
                 value = value.split(".").pop();
@@ -102,5 +107,4 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
 
 // customStringify 함수 적용
 this.contexts.json = customStringify(this);
-
 </function>
