@@ -1,3 +1,28 @@
+Please vibe code the following for this event storming model:
+
+{{{contexts.json}}}
+
+It is necessary to create a DDD-based test file by referring to the given, when, then in the policies example.
+
+I want to utilize following techniques:
+
+- clean architecture
+- spring-boot3
+- spring-data-rest
+- JPA (must use package jakarta.persistence.* instead of javax.persistence.*)
+- H2 DB
+- Lombok
+- Kafka with spring-cloud-streams library 
+- JUnit Test(Given-When-Then)
+
+
+SELF-CRITICISM: 
+ - when you create pom.xml, USE correct parent project to spring boot 3
+ - when you create pom.xml, you MUST specify the version: 3.1.3 ONLY for the spring-cloud-streams
+ - Please generate start from pom.xml
+
+<function>
+
 var cache = []
 const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "incomingRelations", "source", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "isRestRepository", "restRepositoryInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "trigger", "annotataion", "entities", "relations", "targetElement", "items"]
 
@@ -43,18 +68,22 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             // null 값은 건너뛰기
             if (value === null) continue;
             
+            // 1. incomingRelations는 policies 하위에만 생성
             if (key === 'incomingRelations' && !currentPath.includes('policies')) {
                 continue;
             }
             
+            // 2. incomingRelations.value는 출력하지 않음
             if (key === 'value' && currentPath.includes('incomingRelations')) {
                 continue;
             }
             
+            // 3. entities.relations 하위의 relations 제거
             if (key === 'relations' && currentPath.includes('entities') && currentPath.includes('relations')) {
                 continue;
             }
             
+            // 4. source.fieldDescriptors 제거 - 새로 추가한 조건
             if (key === 'fieldDescriptors' && currentPath.includes('source')) {
                 continue;
             }
@@ -83,3 +112,4 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
 
 // customStringify 함수 적용
 this.contexts.json = customStringify(this);
+</function>
