@@ -1,7 +1,7 @@
 ---
 alwaysApply: true
 ---
-## Package Structure Requirements for Code Generation
+Package Structure Requirements for Code Generation
 
 Please generate the following files according to the provided metadata, following the structure and file descriptions below.
 
