@@ -1,0 +1,48 @@
+--- 
+alwaysApply: true
+---
+When generating code, please strictly adhere to the following frameworks, technologies, databases and utilities, architectural patterns and design methodologies.
+
+## Core Framework
+1. Spring Boot 3.1.4 based application framework
+2. Java 17+ with Jakarta EE API support
+3. Must import from Jakarta packages, not Javax
+
+## Key Technologies
+1. Data access layer implementation via Spring Data JPA
+2. RESTful API exposure through Spring Data REST
+3. Microservice communication facilitated by Spring Cloud Stream (4.0.4 version)
+4. Spring DDD Extension Annotations must be utilized
+   - Core annotations: @AggregateRoot, @Entity, @ValueObject, @Repository
+   - Event handling with @DomainEvent and @EventListener
+   - Lifecycle management through @CommandHandler and @EventSourcingHandler
+   - Persistence support with @Embedded and @ElementCollection
+
+## Messaging and Event Processing
+1. Message broker implementation with Apache Kafka
+   - Real-time data processing via Kafka Streams
+   - Data integration through Kafka Connect
+   - Schema management and version compatibility ensured by Schema Registry
+2. Kafka producer/consumer implementation with Spring Kafka
+   - Message consumption via @KafkaListener annotations
+   - Message publishing through KafkaTemplate
+   - Transactional messaging support
+
+## Database and Utilities
+- H2 in-memory database
+- Code simplification through Lombok
+
+## Architectural Patterns and Design Methodologies
+1. Domain-Driven Design (DDD)
+   - Domain modeling based on event storming (aggregates, entities, value objects, domain events)
+   - Domain interaction via domain events
+   - Spring DDD Extension Annotation implementation (@AggregateRoot, @Entity, @ValueObject, @DomainEvent, @EventListener, etc.)
+2. Clean Architecture
+   - Layered structure (domain, infrastructure, application)
+   - Adapter pattern with inbound/outbound adapters
+3. CQRS Pattern
+   - Command and Query Responsibility Segregation
+   - Performance optimization through read/write model separation
+4. Microservice Architecture
+   - Inter-service communication via RESTful APIs
+   - Loose coupling through event-driven messaging
