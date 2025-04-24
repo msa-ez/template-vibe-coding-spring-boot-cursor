@@ -3,7 +3,7 @@ alwaysApply: true
 ---
 When generating code based on policy stickers, please follow these requirements:
 
-1. 참조 메타데이터 및 역할
+1. Reference Metadata and Roles
 
 It processes domain events defined in the policies.incomingRelations.source resource of the model metadata. It receives domain events using KafkaListener and generates the received domain event code.
 A port method should be declared within the Aggregate Root Entity with the Policy name, and business logic should be implemented by passing the received event.
