@@ -26,9 +26,14 @@ SELF-CRITICISM:
 var cache = []
 const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "incomingRelations", "source", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "isRestRepository", "restRepositoryInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "entities", "relations", "targetElement", "items"]
 
-function customStringify(obj, cache = new Set()) {
+function customStringify(obj, cache = new Set(), parentType = null, parentKey = null) {
     if (obj === null || typeof obj !== 'object') {
         return JSON.stringify(obj);
+    }
+
+    // 1. 빈 배열이거나 null인 경우 처리
+    if (Array.isArray(obj) && obj.length === 0) {
+        return null; // 나중에 제거를 위해 null 반환
     }
 
     if (cache.has(obj)) {
@@ -38,8 +43,15 @@ function customStringify(obj, cache = new Set()) {
     cache.add(obj);
 
     if (Array.isArray(obj)) {
-        const items = obj.map(item => customStringify(item, cache));
+        const items = obj.map(item => customStringify(item, cache, parentType, parentKey))
+                        .filter(item => item !== null); // null 항목 필터링
         cache.delete(obj);
+        
+        // 필터링 후 빈 배열이 되면 null 반환
+        if (items.length === 0) {
+            return null;
+        }
+        
         return `[${items.join(',')}]`;
     }
 
@@ -51,21 +63,32 @@ function customStringify(obj, cache = new Set()) {
             let value = obj[key];
             // null 값은 건너뛰기
             if (value === null) continue;
+            
+            // 2. incomingRelations 처리 - policies 하위가 아닌 source 하위에는 생성 안 함
+            if (key === 'incomingRelations' && parentKey === 'source') {
+                continue;
+            }
 
             if (key === "_type" && typeof value === 'string' && value.indexOf('.') > 1) {
                 value = value.split(".").pop();
             }
 
+            // 재귀 호출 시 현재 객체의 타입과 키 정보 전달
+            const stringifiedValue = customStringify(value, cache, obj.type || parentType, key);
+            
+            // null을 반환받은 경우(빈 배열/객체) 건너뛰기
+            if (stringifiedValue === null) continue;
+
             if (key === 'value' && (obj.type === 'Aggregate' || obj.type === 'Event')) {
                 pairs.push(`"${key}":${JSON.stringify(value)}`);
             } else {
-                pairs.push(`"${key}":${customStringify(value, cache)}`);
+                pairs.push(`"${key}":${stringifiedValue}`);
             }
         }
     }
 
     cache.delete(obj);
-    return `{${pairs.join(',')}}`;
+    return pairs.length > 0 ? `{${pairs.join(',')}}` : null; // 빈 객체면 null 반환
 }
 
 // customStringify 함수 적용
