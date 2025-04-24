@@ -5,6 +5,7 @@ alwaysApply: true
 
 Please generate the following files according to the provided metadata, following the structure and file descriptions below.
 
+```
 /[service] # Created by metadata name.
   /src
     /main
@@ -24,3 +25,4 @@ Please generate the following files according to the provided metadata, followin
     /resources
         application.yml # Defines service configuration in microservice environment
   pom.xml              # Maven configuration based on Spring Boot 3
+  ```
