@@ -1,6 +1,3 @@
----
-alwaysApply: true
----
 Generate code based on the following requirements:
 
 1. The package structure must be created first, based on the package-structure.
