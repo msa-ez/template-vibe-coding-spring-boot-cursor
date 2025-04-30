@@ -13,9 +13,9 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
         return JSON.stringify(obj);
     }
 
-    // 빈 배열인 경우만 필터링하고, 빈 객체는 유지
+    // 빈 배열인 경우만 필터링
     if (Array.isArray(obj) && obj.length === 0) {
-        return null; // 나중에 제거를 위해 null 반환
+        return null;
     }
 
     if (cache.has(obj)) {
@@ -30,10 +30,9 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
 
     if (Array.isArray(obj)) {
         const items = obj.map(item => customStringify(item, cache, parentType, parentKey, currentPath))
-                        .filter(item => item !== null); // null 항목 필터링
+                        .filter(item => item !== null);
         cache.delete(obj);
         
-        // 필터링 후 빈 배열이 되면 null 반환
         if (items.length === 0) {
             return null;
         }
@@ -47,7 +46,6 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             if (isNaN(key) && !includingKeys.includes(key)) continue;
 
             let value = obj[key];
-            // null 값은 건너뛰기
             if (value === null) continue;
             
             if (key === 'incomingRelations' && !currentPath.includes('policies')) {
@@ -66,24 +64,23 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
                 value = value.split(".").pop();
             }
 
-            // 재귀 호출 시 현재 객체의 타입과 키 정보, 경로 전달
+            // value 키의 실제 내용을 항상 포함하도록 처리
             const stringifiedValue = customStringify(value, cache, obj.type || parentType, key, currentPath);
             
-            // 중요 변경: 빈 객체({})도 유지하도록 수정
-            // 만약 value가 빈 객체였다면 stringifiedValue는 "{}"이 될 수 있음
-            if (stringifiedValue === null && key !== 'value') continue;
-            
-            // 빈 객체인 경우에도 value 키는 유지
-            if (key === 'value' && (stringifiedValue === null || stringifiedValue === '{}')) {
-                pairs.push(`"${key}":{}`);
+            // 값이 null인 경우에도 value 키는 항상 처리
+            if (key === 'value') {
+                // value 키의 경우 원래 값이 있으면 그대로 사용
+                pairs.push(`"${key}":${stringifiedValue || '{}'}`);
             } else {
+                // 다른 키는 null이면 건너뛰기
+                if (stringifiedValue === null) continue;
                 pairs.push(`"${key}":${stringifiedValue}`);
             }
         }
     }
 
     cache.delete(obj);
-    return pairs.length > 0 ? `{${pairs.join(',')}}` : null; // 빈 객체도 반환하도록 수정
+    return pairs.length > 0 ? `{${pairs.join(',')}}` : null;
 }
 
 // customStringify 함수 적용
