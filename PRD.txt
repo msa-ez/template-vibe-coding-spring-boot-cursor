@@ -50,22 +50,6 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             // null 값은 건너뛰기
             if (value === null) continue;
             
-            // value 키 처리 로직
-            // given, when, then 경로에 있거나 부모가 given, when, then인 경우에만 value 유지
-            const isInExamples = currentPath.includes('examples');
-            const isInGivenWhenThen = 
-                currentPath.includes('given') || 
-                currentPath.includes('when') || 
-                currentPath.includes('then') || 
-                parentKey === 'given' || 
-                parentKey === 'when' || 
-                parentKey === 'then';
-            
-            // examples 내의 given/when/then이 아닌 곳에서는 value 키 제외
-            if (key === 'value' && !(isInExamples && isInGivenWhenThen)) {
-                continue;
-            }
-            
             if (key === 'incomingRelations' && !currentPath.includes('policies')) {
                 continue;
             }
