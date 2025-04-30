@@ -13,7 +13,7 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
         return JSON.stringify(obj);
     }
 
-    // 빈 배열이거나 null인 경우 처리
+    // 빈 배열인 경우만 필터링하고, 빈 객체는 유지
     if (Array.isArray(obj) && obj.length === 0) {
         return null; // 나중에 제거를 위해 null 반환
     }
@@ -69,14 +69,21 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             // 재귀 호출 시 현재 객체의 타입과 키 정보, 경로 전달
             const stringifiedValue = customStringify(value, cache, obj.type || parentType, key, currentPath);
             
-            if (stringifiedValue === null) continue;
-
-            pairs.push(`"${key}":${stringifiedValue}`);
+            // 중요 변경: 빈 객체({})도 유지하도록 수정
+            // 만약 value가 빈 객체였다면 stringifiedValue는 "{}"이 될 수 있음
+            if (stringifiedValue === null && key !== 'value') continue;
+            
+            // 빈 객체인 경우에도 value 키는 유지
+            if (key === 'value' && (stringifiedValue === null || stringifiedValue === '{}')) {
+                pairs.push(`"${key}":{}`);
+            } else {
+                pairs.push(`"${key}":${stringifiedValue}`);
+            }
         }
     }
 
     cache.delete(obj);
-    return pairs.length > 0 ? `{${pairs.join(',')}}` : null; // 빈 객체면 null 반환
+    return pairs.length > 0 ? `{${pairs.join(',')}}` : null; // 빈 객체도 반환하도록 수정
 }
 
 // customStringify 함수 적용
