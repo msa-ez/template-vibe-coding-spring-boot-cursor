@@ -55,7 +55,12 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
                 continue;
             }
             
-            if (key === 'value' && currentPath.includes('incomingRelations')) {
+            // examples 경로 내 given, when, then 하위의 value 포함 조건 수정
+            const isExamplePath = currentPath.includes('examples');
+            const isGivenWhenThenPath = isExamplePath && 
+                (currentPath.includes('given') || currentPath.includes('when') || currentPath.includes('then'));
+            
+            if (key === 'value' && !isGivenWhenThenPath) {
                 continue;
             }
             
@@ -76,7 +81,10 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             
             if (stringifiedValue === null) continue;
 
-            if (key === 'value' && (obj.type === 'Aggregate' || obj.type === 'Event')) {
+            // examples 경로 내 given, when, then 하위의 value 값의 처리 수정
+            if (key === 'value' && isGivenWhenThenPath) {
+                pairs.push(`"${key}":${JSON.stringify(value)}`);
+            } else if (key === 'value' && (obj.type === 'Aggregate' || obj.type === 'Event')) {
                 pairs.push(`"${key}":${JSON.stringify(value)}`);
             } else {
                 pairs.push(`"${key}":${stringifiedValue}`);
