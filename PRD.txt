@@ -82,4 +82,5 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
 }
 
 // customStringify 함수 적용
-this.contexts.json = customStringify(this);</function>
+this.contexts.json = customStringify(this);
+</function>
