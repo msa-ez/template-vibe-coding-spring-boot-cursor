@@ -10,7 +10,7 @@ Click the **'Download archive'** icon to download the project to your local repo
 In your IDE (Cursor, VSCode...), access the project and rename the clinerules folder to match Cline implementation requirements:
 
 ```
-clinerules > .clinerules
+vibe-coding-rules > .clinerules
 ```
 
 3. Configure Token Settings

@@ -1,6 +1,3 @@
----
-alwaysApply: true
----
 Package Structure Requirements for Code Generation
 
 Please generate the following files according to the provided metadata, following the structure and file descriptions below.
@@ -9,7 +6,7 @@ Please generate the following files according to the provided metadata, followin
 /[service] # Created by metadata name.
   /src
     /main
-      /java/{{options.package}}
+      /java/vibecoding
         /domain
             /Aggregate.java  # Domain entity implementing DDD Aggregate Root
             /ValueObject.java # VO class forming relationship with Aggregate Root Entity
@@ -22,7 +19,9 @@ Please generate the following files according to the provided metadata, followin
             Controller.java(if metadata`s commands exists) # Inbound Adaptor providing RESTful API endpoints,
             PolicyHandler.java # Inbound Adaptor for receiving and processing events (If metadata`s policies exists.)
             EventHandler.java # An outbound adapter that publishes domain events stored in the event queue (List) inside AbstractAggregateRoot to the outside.
-    /resources
+      /resources
         application.yml # Defines service configuration in microservice environment
+    /test
+      [service]Test.java # JUnit Test file structure based on Given-When-Then pattern(If metadata`s policies.examples)
   pom.xml              # Maven configuration based on Spring Boot 3
   ```

@@ -1,14 +1,11 @@
---- 
-alwaysApply: true
----
 When generating code, please strictly adhere to the following frameworks, technologies, databases and utilities, architectural patterns and design methodologies.
 
-## Core Framework
+Core Framework
 1. Spring Boot 3.1.4 based application framework
 2. Java 17+ with Jakarta EE API support
 3. Must import from Jakarta packages, not Javax
 
-## Key Technologies
+Key Technologies
 1. Data access layer implementation via Spring Data JPA
 2. RESTful API exposure through Spring Data REST
 3. Microservice communication facilitated by Spring Cloud Stream (4.0.4 version)
@@ -18,7 +15,16 @@ When generating code, please strictly adhere to the following frameworks, techno
    - Lifecycle management through @CommandHandler and @EventSourcingHandler
    - Persistence support with @Embedded and @ElementCollection
 
-## Messaging and Event Processing
+Testing Methodology
+1. JUnit test implementation following Given-When-Then pattern
+   - Given: Test data and preconditions setup
+   - When: Action or method being tested
+   - Then: Verification of expected outcomes
+2. Test-driven development (TDD) practices
+   - Unit testing with JUnit 5
+   - Integration testing with Spring Test
+
+Messaging and Event Processing
 1. Message broker implementation with Apache Kafka
    - Real-time data processing via Kafka Streams
    - Data integration through Kafka Connect
@@ -28,11 +34,11 @@ When generating code, please strictly adhere to the following frameworks, techno
    - Message publishing through KafkaTemplate
    - Transactional messaging support
 
-## Database and Utilities
+Database and Utilities
 - H2 in-memory database
 - Code simplification through Lombok
 
-## Architectural Patterns and Design Methodologies
+Architectural Patterns and Design Methodologies
 1. Domain-Driven Design (DDD)
    - Domain modeling based on event storming (aggregates, entities, value objects, domain events)
    - Domain interaction via domain events

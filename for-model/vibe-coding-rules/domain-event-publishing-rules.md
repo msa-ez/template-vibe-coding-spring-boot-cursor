@@ -1,6 +1,3 @@
----
-alwaysApply: true
----
 The code for Spring Boot DDD Extension must be structured with reference to the requirements below.
 
 1. Aggregate root entities must inherit from `AbstractAggregateRoot` and register domain events using `registerEvent()`.
