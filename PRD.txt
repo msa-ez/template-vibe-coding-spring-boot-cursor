@@ -43,8 +43,16 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
     const pairs = [];
     for (const key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            // value 객체 내부의 모든 키를 처리하거나 includingKeys에 있는 키만 처리
+            // given, when, then 하위에서만 value 키 포함
+            const isInExampleSection = currentPath.includes('given') || currentPath.includes('when') || currentPath.includes('then');
             const isValueField = parentKey === 'value' || currentPath.includes('value');
+            
+            // value 키를 처리하는 조건 - given, when, then 하위에서만 value 키 처리
+            if (key === 'value' && !isInExampleSection) {
+                continue;
+            }
+            
+            // 일반 키 필터링
             if (!isValueField && isNaN(key) && !includingKeys.includes(key)) continue;
 
             let value = obj[key];
