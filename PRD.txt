@@ -43,39 +43,37 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
     const pairs = [];
     for (const key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            if (isNaN(key) && !includingKeys.includes(key)) continue;
+            // value 객체 내부의 모든 키를 처리하거나 includingKeys에 있는 키만 처리
+            const isValueField = parentKey === 'value' || currentPath.includes('value');
+            if (!isValueField && isNaN(key) && !includingKeys.includes(key)) continue;
 
             let value = obj[key];
             if (value === null) continue;
             
-            if (key === 'incomingRelations' && !currentPath.includes('policies')) {
-                continue;
-            }
-            
-            if (key === 'relations' && currentPath.includes('entities') && currentPath.includes('relations')) {
-                continue;
-            }
-            
-            if (key === 'fieldDescriptors' && currentPath.includes('source')) {
-                continue;
+            // 특정 조건의 필터링 로직 유지
+            if (!isValueField) {
+                if (key === 'incomingRelations' && !currentPath.includes('policies')) {
+                    continue;
+                }
+                
+                if (key === 'relations' && currentPath.includes('entities') && currentPath.includes('relations')) {
+                    continue;
+                }
+                
+                if (key === 'fieldDescriptors' && currentPath.includes('source')) {
+                    continue;
+                }
             }
 
             if (key === "_type" && typeof value === 'string' && value.indexOf('.') > 1) {
                 value = value.split(".").pop();
             }
 
-            // value 키의 실제 내용을 항상 포함하도록 처리
+            // 재귀적으로 객체 처리
             const stringifiedValue = customStringify(value, cache, obj.type || parentType, key, currentPath);
             
-            // 값이 null인 경우에도 value 키는 항상 처리
-            if (key === 'value') {
-                // value 키의 경우 원래 값이 있으면 그대로 사용
-                pairs.push(`"${key}":${stringifiedValue || '{}'}`);
-            } else {
-                // 다른 키는 null이면 건너뛰기
-                if (stringifiedValue === null) continue;
-                pairs.push(`"${key}":${stringifiedValue}`);
-            }
+            if (stringifiedValue === null) continue;
+            pairs.push(`"${key}":${stringifiedValue}`);
         }
     }
 
@@ -84,5 +82,4 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
 }
 
 // customStringify 함수 적용
-this.contexts.json = customStringify(this);
-</function>
+this.contexts.json = customStringify(this);</function>
