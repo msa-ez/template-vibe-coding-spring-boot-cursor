@@ -13,5 +13,12 @@ In your IDE (Cursor, VSCode...), access the project and rename the clinerules fo
 vibe-coding-rules > .clinerules
 ```
 
+3. Rename the Rules files.
+You need to change the mdc extension files under .clinerules to md.
+```
+example
+generation-rules.mdc > generation-rules.md
+```
+
 3. Generate Code
 Copy and paste the content from **PRD.txt** into the Cline Prompt Input window to generate your code

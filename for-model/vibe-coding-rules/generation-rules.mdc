@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 Generate the project according to the following requirements:
 
 Project Generation Order
