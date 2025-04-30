@@ -13,3 +13,5 @@ In your locally installed IDE (Cursor, VSCode...), modify the vibe-coding-rules 
 3. Check the prompt
 Information about the event storming model and requirements are in the **PRD.txt** file of each service.
 Copy and paste the text file into the prompt input field of the selected LLM to proceed with model generation.
+
+After code generation is complete, make sure to run tests and resolve any resulting errors.

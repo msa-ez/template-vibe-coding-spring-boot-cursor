@@ -3,6 +3,7 @@ Please implement DDD-based microservice architecture code for an event storming 
 {{namePascalCase}} Metadata:
 {{{contexts.json}}}
 
+After code generation is complete, make sure to run tests and resolve any resulting errors.
 
 <function>
 var cache = []
