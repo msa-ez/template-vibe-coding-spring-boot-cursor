@@ -5,7 +5,6 @@ Please implement DDD-based microservice architecture code for an event storming 
 
 
 <function>
-
 var cache = []
 const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "incomingRelations", "source", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "isRestRepository", "restRepositoryInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "trigger", "annotataion", "entities", "relations", "targetElement", "items"]
 
@@ -51,24 +50,26 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             // null 값은 건너뛰기
             if (value === null) continue;
             
-            if (key === 'incomingRelations' && !currentPath.includes('policies')) {
+            // examples 내의 given/when/then 경로 확인
+            const isExamplePath = path.includes('examples');
+            const isWithinGivenWhenThen = isExamplePath && 
+                (path.includes('given') || path.includes('when') || path.includes('then') || 
+                 parentKey === 'given' || parentKey === 'when' || parentKey === 'then');
+                 
+            // given/when/then 경로 아래에 있지 않은 value는 건너뛰기
+            if (key === 'value' && !isWithinGivenWhenThen) {
                 continue;
             }
             
-            // examples 경로 내 given, when, then 하위의 value 포함 조건 수정
-            const isExamplePath = currentPath.includes('examples');
-            const isGivenWhenThenPath = isExamplePath && 
-                (currentPath.includes('given') || currentPath.includes('when') || currentPath.includes('then'));
-            
-            if (key === 'value' && !isGivenWhenThenPath) {
+            if (key === 'incomingRelations' && !path.includes('policies')) {
                 continue;
             }
             
-            if (key === 'relations' && currentPath.includes('entities') && currentPath.includes('relations')) {
+            if (key === 'relations' && path.includes('entities') && path.includes('relations')) {
                 continue;
             }
             
-            if (key === 'fieldDescriptors' && currentPath.includes('source')) {
+            if (key === 'fieldDescriptors' && path.includes('source')) {
                 continue;
             }
 
@@ -81,14 +82,7 @@ function customStringify(obj, cache = new Set(), parentType = null, parentKey = 
             
             if (stringifiedValue === null) continue;
 
-            // examples 경로 내 given, when, then 하위의 value 값의 처리 수정
-            if (key === 'value' && isGivenWhenThenPath) {
-                pairs.push(`"${key}":${JSON.stringify(value)}`);
-            } else if (key === 'value' && (obj.type === 'Aggregate' || obj.type === 'Event')) {
-                pairs.push(`"${key}":${JSON.stringify(value)}`);
-            } else {
-                pairs.push(`"${key}":${stringifiedValue}`);
-            }
+            pairs.push(`"${key}":${stringifiedValue}`);
         }
     }
 
