@@ -13,6 +13,11 @@ In your IDE (Cursor, VSCode...), access the project and rename the cursorrules f
 vibe-coding-rules > .cursor/rules
 ```
 
+3. Rename the Rules file
+You need to change the md extension files under .cursor/rules to mdc.
+When changing to the mdc extension, the existing text may be lost, so create a separate backup file for each file.
+After changing the extension, change the Rule Type to Always.
+
 3. Mode and Model Selection 
 Press Ctrl + L to activate CursorIDE, then select Agent mode. After that, choose model as claude-3.7-sonnet or claude-3.7-sonnet-max.
 
