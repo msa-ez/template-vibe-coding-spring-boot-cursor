@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 When generating code, please strictly adhere to the following frameworks, technologies, databases and utilities, architectural patterns and design methodologies.
 
 Core Framework
