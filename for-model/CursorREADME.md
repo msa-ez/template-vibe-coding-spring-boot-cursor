@@ -10,7 +10,8 @@ Click the **'Download archive'** icon to download the project to your local repo
 In your IDE (Cursor, VSCode...), access the project and rename the cursorrules folder to match Cursor implementation requirements:
 
 ```
-vibe-coding-rules > .cursor/rules
+mkdir -p .cursor/rules
+mv vibe-coding-rules .cursor/rules/
 ```
 
 3. Mode and Model Selection 
