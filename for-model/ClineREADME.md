@@ -10,14 +10,14 @@ Click the **'Download archive'** icon to download the project to your local repo
 In your IDE (Cursor, VSCode...), access the project and rename the clinerules folder to match Cline implementation requirements:
 
 ```
-vibe-coding-rules > .clinerules
+mv vibe-coding-rules .clinerules
 ```
 
 3. Rename the Rules files.
 You need to change the mdc extension files under .clinerules to md.
+example: generation-rules.mdc > generation-rules.md
 ```
-example
-generation-rules.mdc > generation-rules.md
+for file in *.mdc; do mv -- "$file" "${file%.mdc}.md"; done
 ```
 
 3. Generate Code
