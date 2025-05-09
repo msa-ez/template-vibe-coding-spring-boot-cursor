@@ -11,7 +11,7 @@ In your IDE (Cursor, VSCode...), access the project and rename the cursorrules f
 
 ```
 mkdir -p .cursor/rules
-mv vibe-coding-rules .cursor/rules/
+find vibe-coding-rules -type f -exec mv {} .cursor/rules/ \; && rm -rf vibe-coding-rules
 ```
 
 3. Mode and Model Selection 
