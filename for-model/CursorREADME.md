@@ -20,4 +20,4 @@ Press Ctrl + L to activate CursorIDE, then select Agent mode. After that, choose
 <img width="373" alt="Image" src="https://github.com/user-attachments/assets/afe44a5e-458e-4afd-99dc-e44e92953bc1" />
 
 4. Generate Code
-Copy and paste the content from **PRD.txt** into the Cline Prompt Input window to generate your code
+Copy and paste the content from **PRD.txt** into the Cursor Prompt Input window to generate your code
