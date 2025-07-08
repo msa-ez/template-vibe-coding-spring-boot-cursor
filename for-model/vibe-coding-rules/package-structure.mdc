@@ -11,7 +11,7 @@ Please generate the following files according to the provided metadata, followin
 /[service] # Created by metadata name.
   /src
     /main
-      /java/vibecoding
+      /java/{{options.package}}
         /domain
             /Aggregate.java  # Domain entity implementing DDD Aggregate Root
             /ValueObject.java # VO class forming relationship with Aggregate Root Entity
