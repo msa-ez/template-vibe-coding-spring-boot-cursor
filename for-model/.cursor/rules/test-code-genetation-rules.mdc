@@ -1,7 +1,5 @@
 ---
-description: 
-globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 When generating test code for the project, you must create it based on the content and requirements below.
 

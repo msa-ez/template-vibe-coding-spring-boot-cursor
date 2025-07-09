@@ -1,7 +1,5 @@
 ---
-description: 
-globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 The code for Spring Boot DDD Extension must be structured with reference to the requirements below.
 

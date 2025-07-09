@@ -1,7 +1,5 @@
 ---
-description: 
-globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 Code generated based on eventstorming stickers must follow these requirements:
 
