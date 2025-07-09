@@ -6,11 +6,7 @@ Click the **'Download archive'** icon to download the project to your local repo
 
 <img width="794" alt="Image" src="https://github.com/user-attachments/assets/042bfe89-0305-4330-9709-aeaf12b12002" />
 
-2. Rename the Rules Directory
-In your locally installed IDE (Cursor, VSCode...), modify the vibe-coding-rules folder located in the project root by referring to the README file that will be used.
-
-
-3. Check the prompt
+2. Check the prompt
 Information about the event storming model and requirements are in the **PRD.txt** file of each service.
 Copy and paste the text file into the prompt input field of the selected LLM to proceed with model generation.
 
