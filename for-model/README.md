@@ -1,10 +1,13 @@
 How to Use Vibe Coding
 
-1. Start the Cursor IDE LLM.
+1. Excute Cursor LLM
+Start the Cursor IDE LLM.
 
-2. Copy the service-specific PRD.txt file and attach it to the Cursor prompt.
+2. Copy PRD
+Copy the service-specific PRD.txt file and attach it to the Cursor prompt.
 
-3. Add a natural language-based prompt to request code generation from the LLM.
+3. Generate Prompt
+Add a natural language-based prompt to request code generation from the LLM.
 
 Example)
 ```
