@@ -1,4 +1,5 @@
 ---
+description: This defines the required specifications for writing test files in projects based on the Given-When-Then pattern.
 alwaysApply: false
 ---
 When generating test code for the project, you must create it based on the content and requirements below.

@@ -1,7 +1,6 @@
 ---
-description: 
-globs: 
-alwaysApply: true
+description: This includes content about the frameworks, technology stack, databases, and architecture for use when setting up Spring Boot and DDD Extension-based projects.
+alwaysApply: false
 ---
 When generating code, please strictly adhere to the following frameworks, technologies, databases and utilities, architectural patterns and design methodologies.
 

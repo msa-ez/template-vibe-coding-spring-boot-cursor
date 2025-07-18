@@ -1,4 +1,5 @@
 ---
+description: Used when applying domain event publishing and processing rules according to Spring Boot DDD Extension. It includes requirements for logic processing related to EventListener and registerEvent()
 alwaysApply: false
 ---
 The code for Spring Boot DDD Extension must be structured with reference to the requirements below.
