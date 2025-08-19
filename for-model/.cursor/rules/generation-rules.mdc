@@ -9,7 +9,8 @@ Generate the project according to the following requirements:
 Project Generation Order
 The project MUST be generated in the following order according to the prompt:
 
-Package structure creation -> domain and infra sub-files creation -> pom.xml creation -> Application.java and application.yml creation -> fixed files creation -> test code
+Package structure creation -> domain and infra sub-files creation -> pom.xml creation -> Application.java and application.yml creation -> fixed files creation -> test code creation
+-> test & run
 
 File Generation Order
 Please generate code sequentially based on the requirements below, dividing the requests rather than requesting everything at once:
