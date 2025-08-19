@@ -207,4 +207,81 @@ volumes:
 
 Notes
 1. For gateway, if it has already been created, only additional application.yml route settings should be added.
+   
+   **Example: Adding routes when gateway exists and delivery service is created**
+   
+   Existing gateway/src/main/resources/application.yml:
+   ```yaml
+   spring:
+     profiles: default
+     cloud:
+       gateway:
+   #<<< API Gateway / Routes
+         routes:
+           - id: author
+             uri: http://localhost:8082
+             predicates:
+               - Path=/authors/**
+           - id: writing
+             uri: http://localhost:8083
+             predicates:
+               - Path=/manuscripts/**
+           - id: frontend
+             uri: http://localhost:8080
+             predicates:
+               - Path=/**
+   #>>> API Gateway / Routes
+   ```
+   
+   Route added when delivery service is created:
+   ```yaml
+   spring:
+     profiles: default
+     cloud:
+       gateway:
+   #<<< API Gateway / Routes
+         routes:
+           - id: author
+             uri: http://localhost:8082
+             predicates:
+               - Path=/authors/**
+           - id: writing
+             uri: http://localhost:8083
+             predicates:
+               - Path=/manuscripts/**
+           - id: delivery  # Newly added route
+             uri: http://localhost:8084
+             predicates:
+               - Path=/deliveries/**
+           - id: frontend
+             uri: http://localhost:8080
+             predicates:
+               - Path=/**
+   #>>> API Gateway / Routes
+   ```
+   
+   Same addition should be made to Docker profile:
+   ```yaml
+   spring:
+     profiles: docker
+     cloud:
+       gateway:
+         routes:
+           - id: author
+             uri: http://author:8080
+             predicates:
+               - Path=/authors/**
+           - id: writing
+             uri: http://writing:8080
+             predicates:
+               - Path=/manuscripts/**
+           - id: delivery  # Newly added route
+             uri: http://delivery:8080
+             predicates:
+               - Path=/deliveries/**
+           - id: frontend
+             uri: http://frontend:8080
+             predicates:
+               - Path=/**
+   ```
 2. For kafka, if it has already been created, no additional creation should be done.
