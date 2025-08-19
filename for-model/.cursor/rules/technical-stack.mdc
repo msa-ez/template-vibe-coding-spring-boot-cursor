@@ -39,8 +39,7 @@ Messaging and Event Processing
    - Message publishing through KafkaTemplate
    - Transactional messaging support
 
-Database and Utilities
-- H2 in-memory database
+Utilities
 - Code simplification through Lombok
 
 Architectural Patterns and Design Methodologies
