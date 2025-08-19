@@ -2,7 +2,6 @@
 description: Guidelines for files that must be generated and deployed for microservice implementation and deployment using the Spring Boot framework in MSA-based project construction.
 alwaysApply: false
 ---
-
 When generating code for Spring Boot framework based on PRD, the following files must be created and added under Root or each service.
 
 1. Dockerfile
@@ -91,6 +90,7 @@ server:
 
 ---
 
+
 spring:
   profiles: default
   cloud:
@@ -100,7 +100,7 @@ spring:
         - id: order
           uri: http://localhost:8082
           predicates:
-            - Path=/orders/**, /getOrders/**
+            - Path=/aggregates.namePlural, /views/namePlural...
         - id: customercenter
           uri: http://localhost:8083
           predicates:
@@ -123,6 +123,7 @@ spring:
 
 
 ---
+
 
 spring:
   profiles: docker
