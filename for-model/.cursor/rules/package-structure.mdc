@@ -2,6 +2,7 @@
 description: This must be used when structuring packages based on requirements requested through PRD. It contains Spring Boot-based project configuration and brief descriptions of the files to be generated.
 alwaysApply: false
 ---
+
 Package Structure Requirements for Code Generation
 
 Please generate the following files according to the provided metadata, following the structure and file descriptions below.
@@ -9,6 +10,9 @@ Please generate the following files according to the provided metadata, followin
 ```
 /[service] # Created by metadata name.
   /src
+  /kubernetes
+    /deployment.yaml
+    /service.yaml
     /main
       /java/{{options.package}}
         /domain
@@ -28,4 +32,5 @@ Please generate the following files according to the provided metadata, followin
     /test
       [service]Test.java # JUnit Test file structure based on Given-When-Then pattern(If metadata`s policies.examples)
   pom.xml              # Maven configuration based on Spring Boot 3
+  Dockerfile
   ```
