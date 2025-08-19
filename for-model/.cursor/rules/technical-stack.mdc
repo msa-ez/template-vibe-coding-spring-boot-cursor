@@ -20,20 +20,21 @@ Key Technologies
    - Persistence support with @Embedded and @ElementCollection
 
 Testing Methodology
-1. JUnit test implementation following Given-When-Then pattern
-   - Given: Test data and preconditions setup
-   - When: Action or method being tested
-   - Then: Verification of expected outcomes
-2. Test-driven development (TDD) practices
+For detailed test implementation specifications, refer to @test-code-genetation-rules.
+1. Test-driven development (TDD) practices
    - Unit testing with JUnit 5
    - Integration testing with Spring Test
 
 Messaging and Event Processing
 1. Message broker implementation with Apache Kafka
+   - For Kafka installation and configuration, refer to the kafka section in @fixed-generation-rules
    - Real-time data processing via Kafka Streams
    - Data integration through Kafka Connect
    - Schema management and version compatibility ensured by Schema Registry
-2. Kafka producer/consumer implementation with Spring Kafka
+2. Spring Cloud Stream (4.0.4 version)
+   - Event publishing via StreamBridge (for detailed guidelines, refer to @domain-event-publishing-rules)
+   - application.yml binding configuration
+3. Kafka producer/consumer implementation with Spring Kafka
    - Message consumption via @KafkaListener annotations
    - Message publishing through KafkaTemplate
    - Transactional messaging support

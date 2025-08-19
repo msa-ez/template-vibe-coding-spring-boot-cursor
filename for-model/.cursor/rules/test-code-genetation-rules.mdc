@@ -11,4 +11,7 @@ Test Code Components:
 1. JUnit and Spring Boot related imports and code must be configured
 2. JPA test settings through the DataJPATest annotation
 3. Kafka configurations are strictly prohibited. If needed, they must be replaced with Mocks
-4. Test code must be generated using the Given-When-Then pattern.
+4. Test code must be generated using the Given-When-Then pattern:
+   - Given: Test data and preconditions setup
+   - When: Action or method being tested
+   - Then: Verification of expected outcomes

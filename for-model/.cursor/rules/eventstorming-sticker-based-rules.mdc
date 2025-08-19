@@ -40,7 +40,7 @@ Structure:
 
 1. Reference Metadata and Roles
 
-It processes domain events defined in the policies.incomingRelations.source resource of the model metadata. It receives domain events using KafkaListener and generates the received domain event code.
+It processes domain events defined in the policies.incomingRelations.source resource of the model metadata. For event reception and processing implementation, refer to @domain-event-publishing-rules.
 A port method should be declared within the Aggregate Root Entity with the Policy name, and business logic should be implemented by passing the received event.
 
 2. Generated Files
@@ -64,6 +64,7 @@ Structure:
 - Property declarations based on fieldDescriptors
 - lifeCycle(Only generate when the command's metadata isRestRepository is false.)
 - Declaration of business logic methods in the inbound adapter (extended API controller, eventListener policyHandler) that publishes events
+- For event publishing implementation, refer to @domain-event-publishing-rules
 
 Repository.java
 Filename: AggregateName + Repository.java

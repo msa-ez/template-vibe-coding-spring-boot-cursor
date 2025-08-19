@@ -46,24 +46,13 @@ public class EventHandler {
 ```
 
 #### 2. application.yml Configuration
-```yaml
-spring:
-  cloud:
-    stream:
-      kafka:
-        binder:
-          brokers: localhost:9092
-      bindings:
-        authorRegistered-out-0:    # Spring Cloud Stream adds -out-0 suffix automatically
-          destination: ktlibrary
-          contentType: application/json
-```
+For Spring Cloud Stream configuration, refer to the "Messaging and Event Processing" section in @technical-stack.
 
 ### Common Error Prevention
 - **Never use `-out-0` suffix in StreamBridge.send() channel names**
 - Spring Cloud Stream automatically adds the `-out-0` suffix to create binding names
 - Use simple channel names that match your domain events
-- Ensure Kafka service is running before starting application services
+- For Kafka service execution requirements, refer to the kafka section in @fixed-generation-rules
 
 ### Channel Naming Pattern
 - StreamBridge channel: `eventName` (e.g., "authorRegistered")
