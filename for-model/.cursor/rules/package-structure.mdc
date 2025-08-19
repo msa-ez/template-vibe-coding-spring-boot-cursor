@@ -8,6 +8,13 @@ Package Structure Requirements for Code Generation
 Please generate the following files according to the provided metadata, following the structure and file descriptions below.
 
 ```
+/gateway # gateway route setup @fixed-generation-rules
+  /src/main
+    /java/{{options.package}}
+    /resources
+      /application.yaml
+/infra
+  /docker-compose.yml # kafka setup @fixed-generation-rules
 /[service] # Created by metadata name.
   /src
   /kubernetes
