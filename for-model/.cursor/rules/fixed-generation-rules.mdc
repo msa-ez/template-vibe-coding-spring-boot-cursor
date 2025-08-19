@@ -92,7 +92,9 @@ server:
 
 
 spring:
-  profiles: default
+  config:
+    activate:
+      on-profile: default
   cloud:
     gateway:
 #<<< API Gateway / Routes
@@ -113,10 +115,17 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins:
-              - "*"
+            allowedOriginPatterns:
+              - "http://localhost:*"
+              - "http://127.0.0.1:*"
+              - "https://localhost:*"
             allowedMethods:
-              - "*"
+              - "GET"
+              - "POST" 
+              - "PUT"
+              - "DELETE"
+              - "OPTIONS"
+              - "PATCH"
             allowedHeaders:
               - "*"
             allowCredentials: true
@@ -126,7 +135,9 @@ spring:
 
 
 spring:
-  profiles: docker
+  config:
+    activate:
+      on-profile: docker
   cloud:
     gateway:
       routes:
@@ -145,10 +156,17 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins:
-              - "*"
+            allowedOriginPatterns:
+              - "http://localhost:*"
+              - "http://127.0.0.1:*"
+              - "https://localhost:*"
             allowedMethods:
-              - "*"
+              - "GET"
+              - "POST" 
+              - "PUT"
+              - "DELETE"
+              - "OPTIONS"
+              - "PATCH"
             allowedHeaders:
               - "*"
             allowCredentials: true
@@ -284,4 +302,46 @@ Notes
              predicates:
                - Path=/**
    ```
+
+## CORS Security Guidelines
+
+**CRITICAL SECURITY REQUIREMENT**: When `allowCredentials: true` is set in Gateway CORS configuration, you MUST NOT use `allowedOrigins: "*"`. This combination is a security vulnerability and will cause runtime errors.
+
+### CORS Configuration Rules:
+
+1. **Development Environment (default profile)**:
+   - Use `allowedOriginPatterns` with specific patterns like `"http://localhost:*"`
+   - Specify explicit HTTP methods instead of `"*"`
+   - Never combine `allowCredentials: true` with `allowedOrigins: "*"`
+
+2. **Production Environment (docker profile)**:
+   - Use `allowedOriginPatterns: "*"` only if necessary
+   - Consider restricting to specific domains in production
+
+### Example of CORRECT CORS Configuration:
+```yaml
+globalcors:
+  corsConfigurations:
+    '[/**]':
+      allowedOriginPatterns:
+        - "http://localhost:*"
+        - "http://127.0.0.1:*"
+        - "https://localhost:*"
+      allowedMethods:
+        - "GET"
+        - "POST" 
+        - "PUT"
+        - "DELETE"
+        - "OPTIONS"
+        - "PATCH"
+      allowedHeaders:
+        - "*"
+      allowCredentials: true
+```
+
+### Common CORS Error Prevention:
+- Always use `allowedOriginPatterns` instead of `allowedOrigins` when using wildcards
+- Explicitly define HTTP methods for better security
+- Test CORS configuration in both development and production environments
+
 2. For kafka, if it has already been created, no additional creation should be done.
