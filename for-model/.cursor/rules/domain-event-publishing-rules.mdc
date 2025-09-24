@@ -19,6 +19,7 @@ The code for Spring Boot DDD Extension must be structured with reference to the 
 When using Spring Cloud Stream with StreamBridge for event publishing:
 
 **❌ Wrong Channel Naming:**
+Example
 ```java
 streamBridge.send("authorRegistered-out-0", event);  // Causes "Dispatcher has no subscribers" error
 ```
@@ -31,6 +32,7 @@ streamBridge.send("authorRegistered", event);  // Use simple channel name
 ### Required Configuration
 
 #### 1. EventHandler Implementation
+Example
 ```java
 @Component
 public class EventHandler {
@@ -55,6 +57,6 @@ For Spring Cloud Stream configuration, refer to the "Messaging and Event Process
 - For Kafka service execution requirements, refer to the kafka section in @fixed-generation-rules
 
 ### Channel Naming Pattern
-- StreamBridge channel: `eventName` (e.g., "authorRegistered")
-- Binding configuration: `eventName-out-0` (e.g., "authorRegistered-out-0")
-- Kafka topic: Use consistent topic naming (e.g., "ktlibrary")
+- StreamBridge channel: `eventName` (e.g., "event sticker name")
+- Binding configuration: `eventName-out-0` (e.g., "event-out-0")
+- Kafka topic: Use consistent topic naming (e.g., "{{options.package}}")
