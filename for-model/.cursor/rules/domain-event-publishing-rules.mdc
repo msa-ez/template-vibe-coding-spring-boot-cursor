@@ -1,8 +1,10 @@
 ---
 
+
 description: Used when applying domain event publishing and processing rules according to Spring Boot DDD Extension. It includes requirements for logic processing related to EventListener and registerEvent()
 alwaysApply: false
 ---
+
 
 The code for Spring Boot DDD Extension must be structured with reference to the requirements below.
 
@@ -10,8 +12,9 @@ The code for Spring Boot DDD Extension must be structured with reference to the 
 2. Domain event classes are simple POJOs, and there are various event types such as orders, payments, etc. (`OrderPlacedEvent`, `PaymentCompletedEvent`, etc.).
 3. Component classes using `@TransactionalEventListener` should have multiple event handler methods, with one method responsible for each type of event.
 4. Each event handler method publishes messages to Kafka, using `KafkaTemplate<String, String>`.
-5. Kafka topic names are uniformly set to the project name ({{options.package}}) and operate in conjunction with the Kafka infrastructure settings defined in @fixed-generation-rules.
+5. Kafka topic names are uniformly set to the project name (itsystem) and operate in conjunction with the Kafka infrastructure settings defined in @fixed-generation-rules.
 6. Events must be processed after transaction commits, so use `@TransactionalEventListener(phase = AFTER_COMMIT)`.
+7. **CRITICAL**: To prevent infinite loops, PolicyHandler must use conditional event processing to filter out internal domain events from the same service.
 
 ## Spring Cloud Stream Event Publishing Guidelines
 
@@ -65,3 +68,35 @@ For Spring Cloud Stream configuration, refer to the "Messaging and Event Process
 - Integrates with Kafka settings in docker-compose.yml defined in @fixed-generation-rules
 - Supports automatic topic creation with `KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"` setting
 - All events are published to the same project topic ("{{options.package}}") to maintain consistency
+
+## **CRITICAL**: Infinite Loop Prevention for PolicyHandler
+
+### ⚠️ Problem: PolicyHandler + Internal Domain Events = Infinite Loop
+```java
+// ❌ DANGEROUS: Causes infinite loop
+@EventListener
+public void whenAnyEvent_then_CreateEntity(Object event) {
+    repository.save(entity);  // → Triggers domain event → Back to this method!
+}
+```
+
+### ✅ Solution: Use Conditional Event Processing
+
+**MANDATORY Rules:**
+1. **Never use `Object` parameter without conditions** in PolicyHandler
+2. **Filter out internal domain events** to prevent loops
+3. **Only process external service events**
+
+```java
+// ✅ SAFE: Conditional filtering prevents infinite loops
+@EventListener(condition = "!#event.class.package.name.contains('itsystem.domain')")
+public void whenExternalEvent_then_Process(Object event) {
+    // Only processes external events, internal domain events are filtered out
+}
+
+// ✅ SAFE: Specific event type filtering
+@EventListener
+public void whenExternalCivilComplaintSubmitted(CivilComplaintSubmitted event) {
+    // Only receives specific external event types
+}
+```
