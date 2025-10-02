@@ -1,9 +1,18 @@
+fileName: PRD.txt
+except: {{#compareName name}}{{/compareName}}
+---
 Please implement DDD-based microservice architecture code for an event storming model-based domain using Spring Boot 3 and DDD Extension. The code must be implemented strictly based on the metadata provided below and @generation-rules:
 
 {{namePascalCase}} DDD Model:
 {{{contexts.json}}}
 
 <function>
+window.$HandleBars.registerHelper('compareName', function (name, options) {
+    if(name == 'ui'){
+        return true;
+    }
+});
+
 var cache = []
 const includingKeys = ["", "_type", "fieldDescriptors", "className", "displayName", "events", "aggregateRoot", "aggregates", "policies", "incomingRelations", "source", "commands", "readModels", "queryOption", "queryParameters", "actors", "name", "examples", "given", "when", "then", "value", "type", "controllerInfo", "isRestRepository", "restRepositoryInfo", "apiPath", "method", "fullApiPath", "lifeCycles", "trigger", "annotataion", "entities", "relations", "targetElement", "items","portGenerated"]
 
