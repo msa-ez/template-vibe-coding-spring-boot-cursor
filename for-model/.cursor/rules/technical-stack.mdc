@@ -20,7 +20,7 @@ Key Technologies
    - Persistence support with @Embedded and @ElementCollection
 
 Testing Methodology
-For detailed test implementation specifications, refer to @test-code-genetation-rules.
+For detailed test implementation specifications, refer to @test-code-generation-rules.
 1. Test-driven development (TDD) practices
    - Unit testing with JUnit 5
    - Integration testing with Spring Test
